@@ -4,9 +4,10 @@ services:
 
  redmine:
    # Image source: https://hub.docker.com/_/redmine/
-   https://hub.docker.com/_/redmine/
    container_name: redmine
-   image: "redmine:4.0"
+   build:
+     context: .
+     dockerfile: Dockerfile
    ports:
     - "8088:3000"
    environment:

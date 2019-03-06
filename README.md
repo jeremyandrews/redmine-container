@@ -1,6 +1,7 @@
 # A simple Redmine container
 
-A simple starting point for hosting Redmine in a container.
+A simple starting point for hosting Redmine in a container, using a PostgreSQL
+database in another container.
 
 ## Installation
 
