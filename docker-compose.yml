@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+
+ redmine:
+   # Image source: https://hub.docker.com/_/redmine/
+   https://hub.docker.com/_/redmine/
+   container_name: redmine
+   image: "redmine:4.0"
+   ports:
+    - "8088:3000"
+   environment:
+     REDMINE_DB_POSTGRES: db
+     REDMINE_DB_USERNAME: redmineu
+     REDMINE_DB_PASSWORD: redminep
+     REDMINE_DB_DATABASE: redmined
+   volumes:
+    - "redmine_data:/usr/share/redmine"
+
+ db:
+   container_name: db
+   # Image source: https://hub.docker.com/_/postgres/
+   image: "postgres:11.2"
+   restart: always
+   ports:
+     - 5432
+   environment:
+     POSTGRES_USER: redmineu
+     POSTGRES_PASSWORD: redminep
+     POSTGRES_DB: redmined
+     PGDATA: /var/lib/postgresql/data
+   volumes:
+    - "postgresql_data:/var/lib/postgresql/data"
+
+volumes:
+  redmine_data:
+    driver: local
+
+  postgresql_data:
+    driver: local
