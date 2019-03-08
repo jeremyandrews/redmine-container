@@ -9,9 +9,9 @@ services:
      context: .
      dockerfile: Dockerfile
    ports:
-    - "8088:3000"
+    - "3000:3000"
    environment:
-     REDMINE_DB_POSTGRES: db
+     REDMINE_DB_MYSQL: db
      REDMINE_DB_USERNAME: redmineu
      REDMINE_DB_PASSWORD: redminep
      REDMINE_DB_DATABASE: redmined
@@ -20,22 +20,22 @@ services:
 
  db:
    container_name: db
-   # Image source: https://hub.docker.com/_/postgres/
-   image: "postgres:11.2"
+   # Image source: https://hub.docker.com/_/mariadb/
+   image: "mariadb:10.4"
    restart: always
    ports:
-     - 5432
+     - 3306
    environment:
-     POSTGRES_USER: redmineu
-     POSTGRES_PASSWORD: redminep
-     POSTGRES_DB: redmined
-     PGDATA: /var/lib/postgresql/data
+     MYSQL_ROOT_PASSWORD: rootp
+     MYSQL_USER: redmineu
+     MYSQL_PASSWORD: redminep
+     MYSQL_DATABASE: redmined
    volumes:
-    - "postgresql_data:/var/lib/postgresql/data"
+    - "mysql_data:/var/lib/mysql"
 
 volumes:
   redmine_data:
     driver: local
 
-  postgresql_data:
+  mysql_data:
     driver: local

@@ -1,7 +1,7 @@
 # A simple Redmine container
 
-A simple starting point for hosting Redmine in a container, using a PostgreSQL
-database in another container.
+A simple starting point for testing Redmine in a container, using a MariaDB
+(MySQL) database in another container.
 
 ## Installation
 
@@ -27,23 +27,30 @@ https://www.redmine.org/projects/redmine/wiki/RedmineInstall#Step-10-Logging-int
 
 For full details, visit http://www.redmine.org/
 
-> Redmine is a flexible project management web application. Written using the Ruby on Rails framework, it is cross-platform and cross-database.
+> Redmine is a flexible project management web application. Written using the
+> Ruby on Rails framework, it is cross-platform and cross-database.
 >
-> Redmine is open source and released under the terms of the GNU General Public License v2 (GPL).
+> Redmine is open source and released under the terms of the GNU General Public
+> License v2 (GPL).
 
 ## Customizations
 
 The starting place is two official containers:
  - https://hub.docker.com/_/redmine/
- - https://hub.docker.com/_/postgres/
+ - https://hub.docker.com/_/mariadb/
 
-### Listening port (default: 8088)
+### Listening port (default: 3000)
 
-The Ruby on Rails server listens on port 3000, however it's been exposed on ports
-8088 in `docker-compose.yml`. To change which port the container responds to,
-edit `docker-compose.yml` changing:
+The Ruby on Rails server listens on port 3000. To change which port the
+container responds to, edit `docker-compose.yml` changing the _first_ occurence
+of 3000:
 ```
    ports:
-    - "8088:3000"
+    - "3000:3000"
 ```
-from `8088` to your desired port.
+from `3000` to your desired port. For example, to change to port 80, you'd edit
+it to be as follows:
+```
+   ports:
+    - "80:3000"
+```
