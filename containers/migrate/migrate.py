@@ -16,6 +16,8 @@ mysql_db = mysql.connector.connect(
     host=settings.source_hostname, user=settings.source_username,
     password=settings.source_password, database=settings.source_database,
 )
+mysql_db.autocommit = True
+mysql_cursor = mysql_db.cursor()
 
 # In order to migrate data via the Redmine API, it must be enabled. Log in to
 # Redmine as an administrator, and visit Administration, Settings, API and
@@ -29,3 +31,17 @@ redmine = Redmine(settings.destination_url,
 
 # Now SELECT items from your source, and create() them in your destination.
 # https://python-redmine.com/introduction.html
+#mysql_cursor.execute('SELECT name, mail, ...')
+
+# Then loop through them and add them to Redmine, for example:
+try:
+    redmine.user.create(
+        login='example',
+        firstname='First',
+        lastname='Last',
+        mail='test@example.com',
+        must_change_passwd=True,
+        generate_password=True,
+    )
+except Exception as e:
+    print("User creation failed: %s" % e)
