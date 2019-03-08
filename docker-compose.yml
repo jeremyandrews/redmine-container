@@ -7,16 +7,16 @@ services:
    container_name: redmine
    build:
      context: .
-     dockerfile: Dockerfile
+     dockerfile: containers/redmine/Dockerfile
    ports:
-    - "3000:3000"
+     - "3000:3000"
    environment:
      REDMINE_DB_MYSQL: db
      REDMINE_DB_USERNAME: redmineu
      REDMINE_DB_PASSWORD: redminep
      REDMINE_DB_DATABASE: redmined
    volumes:
-    - "redmine_data:/usr/share/redmine"
+     - "redmine_data:/usr/share/redmine"
 
  db:
    container_name: db
@@ -31,7 +31,18 @@ services:
      MYSQL_PASSWORD: redminep
      MYSQL_DATABASE: redmined
    volumes:
-    - "mysql_data:/var/lib/mysql"
+     - "mysql_data:/var/lib/mysql"
+
+ migrate:
+   container_name: migrate
+   # Image source: https://hub.docker.com/_/python/
+   image: "python:3"
+   restart: always
+   build:
+     context: containers/migrate
+     dockerfile: Dockerfile
+   volumes:
+     - ./containers/migrate:/usr/src/app
 
 volumes:
   redmine_data:
